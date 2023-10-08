@@ -13,29 +13,16 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    // Getters e setters
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public double getPreco() {
         return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
     }
 
     public int getQuantidade() {
@@ -48,11 +35,6 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" +
-                "id=" + id +
-                ", descricao='" + descricao + '\'' +
-                ", preco=" + preco +
-                ", quantidade=" + quantidade +
-                '}';
+        return "ID: " + id + ", Descrição: " + descricao + ", Preço: " + preco + ", Quantidade: " + quantidade;
     }
 }

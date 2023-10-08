@@ -9,13 +9,8 @@ public class Cliente {
         this.nome = nome;
     }
 
-    // Getters e setters
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -28,9 +23,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
+        return "ID: " + id + ", Nome: " + nome;
     }
 }
