@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Venda {
     private int id;
@@ -8,6 +10,7 @@ public class Venda {
     private int clienteId;
     private double valorTotal;
     private String status;
+    private List<ItemVenda> itensVenda;
 
     public Venda(int id, Date data, int clienteId, double valorTotal, String status) {
         this.id = id;
@@ -15,6 +18,7 @@ public class Venda {
         this.clienteId = clienteId;
         this.valorTotal = valorTotal;
         this.status = status;
+        this.itensVenda = new ArrayList<>();
     }
 
     public int getId() {
@@ -35,6 +39,14 @@ public class Venda {
 
     public String getStatus() {
         return status;
+    }
+
+    public List<ItemVenda> getItensVenda() {
+        return itensVenda;
+    }
+
+    public void adicionarItem(ItemVenda item) {
+        itensVenda.add(item);
     }
 
     @Override

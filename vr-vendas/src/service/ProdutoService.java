@@ -52,4 +52,30 @@ public class ProdutoService {
             e.printStackTrace();
         }
     }
+
+    public static Produto getProdutoById(int id) {
+        Connection connection = DatabaseService.getConnection();
+        Produto produto = null;
+
+        try {
+            String sql = "SELECT * FROM produtos WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String descricao = resultSet.getString("descricao");
+                double preco = resultSet.getDouble("preco");
+                int quantidade = resultSet.getInt("quantidade");
+                produto = new Produto(id, descricao, preco, quantidade);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produto;
+    }
 }
