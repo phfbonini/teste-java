@@ -69,10 +69,26 @@ public class MenuPrincipalUI {
         consultarVendasButton.setFont(new Font("Arial", Font.BOLD, 18));
         panel.add(consultarVendasButton);
 
+
         consultarVendasButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
             }
         });
+
+        // Botão "Cadastrar Venda"
+        JButton cadastrarVendaButton = new JButton("Cadastrar Venda");
+        cadastrarVendaButton.setBounds(400, 500, 200, 50);
+        cadastrarVendaButton.setFont(new Font("Arial", Font.BOLD, 18));
+        panel.add(cadastrarVendaButton);
+
+        cadastrarVendaButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Abra a interface de CadastroVendaUI quando o botão for clicado
+                CadastroVendaUI cadastroVendaUI = new CadastroVendaUI();
+                cadastroVendaUI.createAndShowGUI();
+            }
+        });
+
     }
 }
