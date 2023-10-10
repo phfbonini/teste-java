@@ -30,6 +30,7 @@ public class DatabaseService {
             boolean vendasTableExists = false;
             boolean itensVendaTableExists = false;
 
+            //percorre o resultado setando as variaveis de cada tabela
             while (resultSet.next()) {
                 String tableName = ((ResultSet) resultSet).getString("tablename");
                 if (tableName.equals("produtos")) {

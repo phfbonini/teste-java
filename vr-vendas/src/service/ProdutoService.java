@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoService {
+
+    private static Connection connection = DatabaseService.getConnection();
     public static List<Produto> getAllProdutos() {
         List<Produto> produtos = new ArrayList<>();
-        Connection connection = DatabaseService.getConnection();
+
 
         try {
             String sql = "SELECT * FROM produtos";
@@ -77,5 +79,32 @@ public class ProdutoService {
         }
 
         return produto;
+    }
+
+    public static void atualizarQuantidadeProduto(int produtoId, int quantidadeVendida) throws SQLException {
+        String selectSql = "SELECT quantidade FROM produtos WHERE id = ?";
+        PreparedStatement selectStatement = connection.prepareStatement(selectSql);
+        selectStatement.setInt(1, produtoId);
+        ResultSet resultSet = selectStatement.executeQuery();
+
+        int quantidadeAtual = 0;
+
+        if (resultSet.next()) {
+            quantidadeAtual = resultSet.getInt("quantidade");
+        } else {
+        }
+
+        resultSet.close();
+        selectStatement.close();
+
+        int novaQuantidade = quantidadeAtual - quantidadeVendida;
+
+        String updateSql = "UPDATE produtos SET quantidade = ? WHERE id = ?";
+        PreparedStatement updateStatement = connection.prepareStatement(updateSql);
+        updateStatement.setInt(1, novaQuantidade);
+        updateStatement.setInt(2, produtoId);
+        updateStatement.executeUpdate();
+
+        updateStatement.close();
     }
 }
