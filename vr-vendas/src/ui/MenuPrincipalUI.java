@@ -12,8 +12,6 @@ public class MenuPrincipalUI {
         DatabaseService.connectToDatabase(); // Inicializa o DatabaseService
 
         JFrame frame = new JFrame("Sistema de Gestão de Vendas");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 600); // Tamanho maior
         frame.setResizable(false);
 
         JPanel panel = new JPanel();
@@ -22,6 +20,10 @@ public class MenuPrincipalUI {
 
         placeComponents(panel);
 
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1020, 720);// Esta linha é adicionada para dimensionar a janela adequadamente
+        frame.setLocationRelativeTo(null);  // Defina a localização relativa ao centro da tela após chamar pack()
         frame.setVisible(true);
     }
 
@@ -72,9 +74,11 @@ public class MenuPrincipalUI {
 
         consultarVendasButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                ConsultarVendasUI.main(null); // Inicia a UI de consulta de vendas
             }
         });
+
+
 
         // Botão "Cadastrar Venda"
         JButton cadastrarVendaButton = new JButton("Cadastrar Venda");

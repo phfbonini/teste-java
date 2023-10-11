@@ -48,4 +48,29 @@ public class ClienteService {
             e.printStackTrace();
         }
     }
+
+    public static Cliente getClienteById(int clienteId) {
+        Connection connection = DatabaseService.getConnection();
+        Cliente cliente = null;
+
+        try {
+            String sql = "SELECT * FROM clientes WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, clienteId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nome = resultSet.getString("nome");
+                cliente = new Cliente(id, nome);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cliente;
+    }
 }

@@ -53,4 +53,8 @@ public class Venda {
     public String toString() {
         return "ID: " + id + ", Data: " + data + ", ClienteID: " + clienteId + ", Valor Total: " + valorTotal + ", Status: " + status;
     }
+
+    public void setStatus(String Status) {
+        this.status = Status;
+    }
 }
