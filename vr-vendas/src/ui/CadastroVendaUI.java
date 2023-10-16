@@ -49,7 +49,6 @@ public class CadastroVendaUI {
 
     public void createAndShowGUI() {
         JFrame frame = new JFrame("Cadastro de Venda");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1040, 720);
         frame.setLocationRelativeTo(null);
 
@@ -60,6 +59,8 @@ public class CadastroVendaUI {
         placeComponents(panel);
 
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
 
     private void placeComponents(JPanel panel) {

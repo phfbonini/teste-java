@@ -24,6 +24,8 @@ public class ConsultarVendasUI {
     private JButton estornarVendaButton;
     private List<JToggleButton> toggleButtons;
 
+    private JButton filtrarPorDataButton;
+
     private Venda vendaSelecionada;
 
     public ConsultarVendasUI() {
@@ -47,9 +49,6 @@ public class ConsultarVendasUI {
         estornarVendaButton = new JButton("Estornar Venda");
         estornarVendaButton.setEnabled(false);
         buttonPanel.add(estornarVendaButton);
-
-
-
         estornarVendaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,11 +61,16 @@ public class ConsultarVendasUI {
                         int confirmacao = JOptionPane.showConfirmDialog(frame, "Tem certeza de que deseja estornar esta venda?", "Confirmar Estorno", JOptionPane.YES_NO_OPTION);
                         if (confirmacao == JOptionPane.YES_OPTION) {
                             vendaSelecionada.setStatus("estornada");
+                            vendaService.estornarVenda(vendaSelecionada.getId());
                             System.out.println("Venda ID " + vendaSelecionada.getId() + " foi estornada.");
+                            List<Venda> vendas = vendaService.getAllVendas();
+                            ordenarVendasPorData(vendas);
+                            reloadVendas(vendas);
                         }
                     }
                 }
             }
+
         });
 
 
@@ -80,8 +84,23 @@ public class ConsultarVendasUI {
             }
         });
 
+        filtrarPorDataButton = new JButton("Filtrar por Data");
+        buttonPanel.add(filtrarPorDataButton);
+        filtrarPorDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Venda> vendas = vendaService.getAllVendas();
+                ordenarVendasPorData(vendas);
+                reloadVendas(vendas);
 
-        loadAccordionDetailedView();
+            }
+        });
+
+
+
+        List<Venda> vendas = vendaService.getAllVendas();
+        loadAccordionDetailedView(vendas);
+
 
 
         frame.setSize(1020, 720);
@@ -89,7 +108,7 @@ public class ConsultarVendasUI {
         frame.setVisible(true);
     }
 
-    private void loadAccordionDetailedView() {
+    private void loadAccordionDetailedView(List<Venda> vendas) {
         JPanel accordionPanel = new JPanel();
         accordionPanel.setLayout(new BoxLayout(accordionPanel, BoxLayout.Y_AXIS));
         accordionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -128,7 +147,6 @@ public class ConsultarVendasUI {
             }
         };
 
-        List<Venda> vendas = vendaService.getAllVendas();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (Venda venda : vendas) {
             String clienteNome = ClienteService.getClienteById(venda.getClienteId()).getNome();
@@ -154,12 +172,10 @@ public class ConsultarVendasUI {
 
         detailedPanel.add(accordionPanel, BorderLayout.CENTER);
 
-
         JLabel instructionLabel = new JLabel("Clique sobre uma venda para visualizar mais detalhes");
-        Font largerFont = instructionLabel.getFont().deriveFont(16.0f); 
+        Font largerFont = instructionLabel.getFont().deriveFont(16.0f);
         instructionLabel.setFont(largerFont);
         detailedPanel.add(instructionLabel, BorderLayout.NORTH);
-
     }
 
     public static int extrairIDVenda(String input) {
@@ -185,6 +201,19 @@ public class ConsultarVendasUI {
 
         return new JTable(detailedTableModel);
     }
+
+    private void reloadVendas(List<Venda> vendas) {
+        detailedPanel.removeAll();
+        loadAccordionDetailedView(vendas);
+        detailedPanel.revalidate();
+        detailedPanel.repaint();
+    }
+
+
+    private void ordenarVendasPorData(List<Venda> vendas) {
+        vendas.sort((v1, v2) -> v2.getData().compareTo(v1.getData()));
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ConsultarVendasUI());
