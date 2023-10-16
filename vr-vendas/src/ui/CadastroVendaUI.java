@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class CadastroVendaUI {
     public CadastroVendaUI() {
         vendaService = new VendaService();
         clienteService = new ClienteService();
+
+
     }
 
     public void createAndShowGUI() {
@@ -71,14 +74,46 @@ public class CadastroVendaUI {
         dataLabel.setBounds(20, 70, 80, 25);
         panel.add(dataLabel);
 
-        try {
-            MaskFormatter mask = new MaskFormatter("##/##/####");
-            dataField = new JFormattedTextField(mask);
-            dataField.setBounds(120, 70, 150, 25);
-            panel.add(dataField);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
+
+        // Obtém a data atual
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dataAtual = dateFormat.format(currentDate);
+
+        // Define a data atual no campo de data
+        dataField = new JFormattedTextField(dataAtual);
+        dataField.setBounds(120, 70, 150, 25);
+        panel.add(dataField);
+
+//        try {
+//            MaskFormatter mask = new MaskFormatter("##/##/####");
+//            dataField = new JFormattedTextField(mask);
+//            dataField.setBounds(120, 70, 150, 25);
+//            panel.add(dataField);JToggleButton toggleDataAtualButton = new JToggleButton("Usar Data Atual");
+//    toggleDataAtualButton.setBounds(280, 70, 150, 25);
+//    panel.add(toggleDataAtualButton);
+//
+//    toggleDataAtualButton.addActionListener(new ActionListener() {
+//        public void actionPerformed(ActionEvent e) {
+//            useDataAtual = !useDataAtual;
+//            if (useDataAtual) {
+//                Date currentDate = new Date();
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//                String dataAtual = dateFormat.format(currentDate);
+//                dataField.setText(dataAtual);
+//                dataField.setEditable(false);
+//            } else {
+//                dataField.setText("");
+//                dataField.setEditable(true);
+//            }
+//        }
+//    });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
 
         JLabel clienteLabel = new JLabel("Cliente:");
         clienteLabel.setBounds(20, 110, 80, 25);
@@ -217,7 +252,9 @@ public class CadastroVendaUI {
                     return;
                 }
 
-                double valorTotal = Double.parseDouble(valorTotalField.getText());
+                String valorTotalStr = valorTotalField.getText().replace(",", ".");
+                double valorTotal = Double.parseDouble(valorTotalStr);
+
 
                 Venda venda = new Venda(-1, data, selectedCliente.getId(), valorTotal, "efetivada");
 
@@ -236,6 +273,8 @@ public class CadastroVendaUI {
 
                 try {
                     vendaService.cadastrarVenda(venda, itensVenda);
+                    JOptionPane.showMessageDialog(null, "Venda Efetivada com Sucesso!", "Venda Cadastrada", JOptionPane.INFORMATION_MESSAGE);
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -320,6 +359,54 @@ public class CadastroVendaUI {
         quantidadeField.setText("");
         produtoComboBox.setSelectedIndex(0);
     }
+
+//    private boolean isDateValid(String dateText) {
+//        try {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//            dateFormat.setLenient(false);
+//
+//            Date date = dateFormat.parse(dateText);
+//
+//            Calendar cal = Calendar.getInstance();
+//            cal.setTime(date);
+//
+//            int year = cal.get(Calendar.YEAR);
+//            int month = cal.get(Calendar.MONTH) + 1; // Mês começa em 0
+//            int day = cal.get(Calendar.DAY_OF_MONTH);
+//
+//            // Verifica se o ano está dentro de um intervalo razoável (por exemplo, de 1900 a 2100)
+//            if (year < 1900 || year > 2100) {
+//                JOptionPane.showMessageDialog(null, "O ano deve estar entre 1900 e 2100.", "Erro", JOptionPane.ERROR_MESSAGE);
+//                return false;
+//            }
+//
+//            // Verifica se o mês e o dia estão dentro dos limites válidos
+//            if (month < 1 || month > 12 || day < 1 || day > 31) {
+//                JOptionPane.showMessageDialog(null, "Data inválida. Use o formato dd/MM/yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
+//                return false;
+//            }
+//
+//            // Verificação de datas específicas inválidas, como 30/02/2023
+//            if (day > 28 && month == 2 && !isLeapYear(year)) {
+//                JOptionPane.showMessageDialog(null, "Data inválida. Fevereiro não pode ter mais de 28 dias neste ano.", "Erro", JOptionPane.ERROR_MESSAGE);
+//                return false;
+//            }
+//
+//            return true;
+//        } catch (ParseException e) {
+//            JOptionPane.showMessageDialog(null, "Data inválida. Use o formato dd/MM/yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
+//    }
+//
+//    // Função para verificar se o ano é bissexto
+//    private boolean isLeapYear(int year) {
+//        return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
+//    }
+
+    
+
+
 
 
     public static void main(String[] args) {
