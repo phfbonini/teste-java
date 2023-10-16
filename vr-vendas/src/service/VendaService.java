@@ -87,7 +87,7 @@ public class VendaService {
         }
     }
 
-    public List<Venda> getAllVendas() {
+    public static List<Venda> getAllVendas() {
         List<Venda> vendas = new ArrayList<>();
 
         try {
@@ -115,7 +115,7 @@ public class VendaService {
         return vendas;
     }
 
-    public List<ItemVenda> getItensVenda(int vendaId) {
+    public static List<ItemVenda> getItensVenda(int vendaId) {
         List<ItemVenda> itensVenda = new ArrayList<>();
 
         try {
@@ -144,7 +144,7 @@ public class VendaService {
         return itensVenda;
     }
 
-    public Venda getVendaById(int vendaId) {
+    public static Venda getVendaById(int vendaId) {
         Venda venda = null;
 
         try {
@@ -174,6 +174,10 @@ public class VendaService {
 
     public void estornarVenda(int vendaId) {
         try {
+            if (connection.isClosed()) {
+                // Reabra a conexão com o banco de dados
+                connection = DatabaseService.getConnection();
+            }
 
             Venda venda = getVendaById(vendaId);
 

@@ -82,6 +82,10 @@ public class ProdutoService {
     }
 
     public static void atualizarQuantidadeProduto(int produtoId, int quantidadeVendida) throws SQLException {
+        if (connection.isClosed()) {
+            // Reabra a conexão com o banco de dados
+            connection = DatabaseService.getConnection();
+        }
         String selectSql = "SELECT quantidade FROM produtos WHERE id = ?";
         PreparedStatement selectStatement = connection.prepareStatement(selectSql);
         selectStatement.setInt(1, produtoId);
