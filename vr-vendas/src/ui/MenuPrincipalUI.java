@@ -9,90 +9,85 @@ import java.awt.event.ActionListener;
 
 public class MenuPrincipalUI {
     public static void main(String[] args) {
-        DatabaseService.connectToDatabase(); // Inicializa o DatabaseService
+        DatabaseService.connectToDatabase();
 
         JFrame frame = new JFrame("Sistema de Gestão de Vendas");
         frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1020, 720);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 
         JPanel panel = new JPanel();
         frame.add(panel);
+        panel.setLayout(null);
         panel.setBackground(new Color(240, 240, 240));
 
-        placeComponents(panel);
+        JLabel titleLabel = new JLabel("Sistema de Gestão VR-Software");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setBounds(327, 50, 370, 30);
+        panel.add(titleLabel);
 
+        JLabel subtitleLabel = new JLabel("Bem-vindo");
+        subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        subtitleLabel.setBounds(460, 90, 90, 20);
+        panel.add(subtitleLabel);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1020, 720);// Esta linha é adicionada para dimensionar a janela adequadamente
-        frame.setLocationRelativeTo(null);  // Defina a localização relativa ao centro da tela após chamar pack()
-        frame.setVisible(true);
-    }
-
-    private static void placeComponents(JPanel panel) {
-        panel.setLayout(null);
-
-        // Painel para rótulo de boas-vindas
-        JPanel welcomePanel = new JPanel();
-        welcomePanel.setBounds(50, 50, 900, 100);
-        welcomePanel.setBackground(new Color(70, 130, 180));
-        panel.add(welcomePanel);
-
-        // Rótulo de boas-vindas
-        JLabel welcomeLabel = new JLabel("Bem-vindo ao Sistema de Vendas");
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        welcomePanel.add(welcomeLabel);
-
-        // Botão "Cadastrar Cliente"
-        JButton cadastrarClienteButton = new JButton("Cadastrar Cliente");
-        cadastrarClienteButton.setBounds(400, 200, 200, 50);
-        cadastrarClienteButton.setFont(new Font("Arial", Font.BOLD, 18));
-        panel.add(cadastrarClienteButton);
-
-        cadastrarClienteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CadastroClienteUI.main(null); // Inicia a UI de cadastro de cliente
-            }
-        });
-
-        // Botão "Cadastrar Produto"
-        JButton cadastrarProdutoButton = new JButton("Cadastrar Produto");
-        cadastrarProdutoButton.setBounds(400, 300, 200, 50);
-        cadastrarProdutoButton.setFont(new Font("Arial", Font.BOLD, 18));
-        panel.add(cadastrarProdutoButton);
-
-        cadastrarProdutoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CadastroProdutoUI.main(null); // Inicia a UI de cadastro de produto
-            }
-        });
-
-        // Botão "Consultar Vendas"
-        JButton consultarVendasButton = new JButton("Consultar Vendas");
-        consultarVendasButton.setBounds(400, 400, 200, 50);
-        consultarVendasButton.setFont(new Font("Arial", Font.BOLD, 18));
-        panel.add(consultarVendasButton);
-
-
-        consultarVendasButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ConsultarVendasUI.main(null); // Inicia a UI de consulta de vendas
-            }
-        });
-
-
-
-        // Botão "Cadastrar Venda"
         JButton cadastrarVendaButton = new JButton("Cadastrar Venda");
-        cadastrarVendaButton.setBounds(400, 500, 200, 50);
         cadastrarVendaButton.setFont(new Font("Arial", Font.BOLD, 18));
+        cadastrarVendaButton.setBounds(50, 150, 920, 50);
         panel.add(cadastrarVendaButton);
 
         cadastrarVendaButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Abra a interface de CadastroVendaUI quando o botão for clicado
                 CadastroVendaUI cadastroVendaUI = new CadastroVendaUI();
                 cadastroVendaUI.createAndShowGUI();
             }
         });
 
+        JButton consultarVendasButton = new JButton("Consultar Vendas");
+        JButton cadastrarProdutoButton = new JButton("Cadastrar Produto");
+        JButton cadastrarClienteButton = new JButton("Cadastrar Cliente");
+
+        int buttonWidth = 294;
+        int buttonHeight = 50;
+        int buttonSpacing = 20;
+        int buttonX = 50;
+        int buttonY = 220;
+
+        consultarVendasButton.setFont(new Font("Arial", Font.BOLD, 18));
+        cadastrarProdutoButton.setFont(new Font("Arial", Font.BOLD, 18));
+        cadastrarClienteButton.setFont(new Font("Arial", Font.BOLD, 18));
+
+        consultarVendasButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
+        cadastrarProdutoButton.setBounds(buttonX + buttonWidth + buttonSpacing, buttonY, buttonWidth, buttonHeight);
+        cadastrarClienteButton.setBounds(buttonX + 2 * (buttonWidth + buttonSpacing), buttonY, buttonWidth, buttonHeight);
+
+        panel.add(consultarVendasButton);
+        panel.add(cadastrarProdutoButton);
+        panel.add(cadastrarClienteButton);
+
+        consultarVendasButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ConsultarVendasUI.main(null);
+            }
+        });
+
+        cadastrarProdutoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CadastroProdutoUI.main(null);
+            }
+        });
+
+        cadastrarClienteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CadastroClienteUI.main(null);
+            }
+        });
+        
+        JLabel footerLabel = new JLabel("Desenvolvido por Pedro Bonini :)");
+        footerLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        footerLabel.setBounds(800, 650, 200, 20);
+        panel.add(footerLabel);
     }
 }
