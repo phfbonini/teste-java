@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 public class CadastroProdutoUI {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Cadastro de Produto");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
-
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(450, 200);
+        frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
         frame.add(panel);
         placeComponents(panel);
@@ -27,7 +27,7 @@ public class CadastroProdutoUI {
         panel.add(descricaoLabel);
 
         JTextField descricaoText = new JTextField(165);
-        descricaoText.setBounds(100, 10, 160, 25);
+        descricaoText.setBounds(100, 10, 300, 25);
         panel.add(descricaoText);
 
         JLabel precoLabel = new JLabel("Preço:");
@@ -35,7 +35,7 @@ public class CadastroProdutoUI {
         panel.add(precoLabel);
 
         JTextField precoText = new JTextField(165);
-        precoText.setBounds(100, 40, 160, 25);
+        precoText.setBounds(100, 40, 300, 25);
         panel.add(precoText);
 
         JLabel quantidadeLabel = new JLabel("Quantidade:");
@@ -43,11 +43,11 @@ public class CadastroProdutoUI {
         panel.add(quantidadeLabel);
 
         JTextField quantidadeText = new JTextField(165);
-        quantidadeText.setBounds(100, 70, 160, 25);
+        quantidadeText.setBounds(100, 70, 300, 25);
         panel.add(quantidadeText);
 
         JButton cadastrarButton = new JButton("Cadastrar");
-        cadastrarButton.setBounds(100, 110, 100, 25);
+        cadastrarButton.setBounds(100, 110, 300, 25);
         panel.add(cadastrarButton);
 
         cadastrarButton.addActionListener(new ActionListener() {

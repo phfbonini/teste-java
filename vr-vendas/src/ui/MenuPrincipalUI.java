@@ -1,5 +1,6 @@
 package ui;
 
+import com.sun.tools.javac.Main;
 import service.DatabaseService;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 public class MenuPrincipalUI {
     public static void main(String[] args) {
         DatabaseService.connectToDatabase();
+
 
         JFrame frame = new JFrame("Sistema de Gestão de Vendas");
         frame.setResizable(false);
@@ -84,7 +86,7 @@ public class MenuPrincipalUI {
                 CadastroClienteUI.main(null);
             }
         });
-        
+
         JLabel footerLabel = new JLabel("Desenvolvido por Pedro Bonini :)");
         footerLabel.setFont(new Font("Arial", Font.PLAIN, 10));
         footerLabel.setBounds(800, 650, 200, 20);

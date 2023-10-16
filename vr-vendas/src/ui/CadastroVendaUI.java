@@ -253,8 +253,15 @@ public class CadastroVendaUI {
                     return;
                 }
 
-                String valorTotalStr = valorTotalField.getText().replace(",", ".");
-                double valorTotal = Double.parseDouble(valorTotalStr);
+                String valorTotalStr;
+                double valorTotal;
+                try{
+                     valorTotalStr = valorTotalField.getText().replace(",", ".");
+                    valorTotal = Double.parseDouble(valorTotalStr);
+                } catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null, "Adicione ao menos um produto para cadastrar a venda", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
 
                 Venda venda = new Venda(-1, data, selectedCliente.getId(), valorTotal, "efetivada");
